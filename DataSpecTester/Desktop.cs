@@ -29,7 +29,7 @@ namespace DataSpecTester
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            if ((int)VieMode > 1) return;
+            if (VieMode != InterfaceViewMode.RequestView) return;
 
             if (TesterPlugConfig.Instance.CurrentPlug == null)
             {
@@ -331,7 +331,8 @@ namespace DataSpecTester
         private void tabControlData_Selected(object sender, TabControlEventArgs e)
         {
             VieMode = (InterfaceViewMode)e.TabPageIndex;
-            //if (e.TabPageIndex < 2) Desktop_Resize(this, EventArgs.Empty);
+            if (VieMode == InterfaceViewMode.RequestView || VieMode == InterfaceViewMode.ResponseView)
+                Desktop_Resize(this, EventArgs.Empty);
         }
 
 
