@@ -20,7 +20,7 @@ namespace DataSpecTester
 
         static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
-            
+            MessageBox.Show(e.ToString(), Desktop.ActiveForm.Text, MessageBoxButtons.OK);
         }
     }
 }

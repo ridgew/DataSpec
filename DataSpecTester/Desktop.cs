@@ -29,7 +29,11 @@ namespace DataSpecTester
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            if (VieMode != InterfaceViewMode.RequestView) return;
+            if (VieMode != InterfaceViewMode.RequestView && VieMode != InterfaceViewMode.ResponseView)
+            {
+                ShowEror("当前Tab视图既不是请求(Request)视图，也不是响应(Response)视图，无须解析！", "");
+                return;
+            }
 
             if (TesterPlugConfig.Instance.CurrentPlug == null)
             {
@@ -143,7 +147,7 @@ namespace DataSpecTester
         #endregion
 
 
-        private InterfaceViewMode VieMode = InterfaceViewMode.RequestView;
+        private InterfaceViewMode VieMode = InterfaceViewMode.CapDateView; //默认视图
 
 
         private void FileDragEnter(object sender, DragEventArgs e)
@@ -352,8 +356,14 @@ namespace DataSpecTester
         internal static void ShowEror(string msgFormat, params object[] fmtArgs)
         {
             Form target = Desktop.Instance;
-            MessageBox.Show(target, string.Format(msgFormat, fmtArgs),
-                            target.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (fmtArgs == null || fmtArgs.Length == 0)
+            {
+                MessageBox.Show(target, msgFormat, target.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(target, string.Format(msgFormat, fmtArgs), target.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
